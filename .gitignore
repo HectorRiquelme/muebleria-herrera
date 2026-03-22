@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build output
+apps/admin/.svelte-kit/
+apps/admin/build/
+apps/web/.svelte-kit/
+apps/web/build/
+
+# PocketBase runtime data and binary
+pb/pb_data/
+pb/pocketbase.exe
+pb/pb.zip
+
+# Python cache
+__pycache__/
+
+# Environment
+.env
+.env.*
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Windows artifacts
+%APPDATA%/
+nul
+
+# Dev logs
+*.log

@@ -1,0 +1,396 @@
+[
+  {
+    "id": "users",
+    "name": "users",
+    "type": "auth",
+    "system": false,
+    "fields": [
+      { "id": "f_name", "name": "name", "type": "text", "required": false },
+      {
+        "id": "f_role",
+        "name": "role",
+        "type": "select",
+        "required": true,
+        "maxSelect": 1,
+        "values": ["admin", "worker"]
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "categories",
+    "name": "categories",
+    "type": "base",
+    "fields": [
+      { "id": "f_cat_name", "name": "name", "type": "text", "required": true },
+      { "id": "f_cat_desc", "name": "description", "type": "text", "required": false }
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "products",
+    "name": "products",
+    "type": "base",
+    "fields": [
+      { "id": "f_prod_name", "name": "name", "type": "text", "required": true },
+      { "id": "f_prod_desc", "name": "description", "type": "text", "required": false },
+      { "id": "f_prod_sku", "name": "sku", "type": "text", "required": true },
+      { "id": "f_prod_barcode", "name": "barcode", "type": "text", "required": false },
+      {
+        "id": "f_prod_barcode_type",
+        "name": "barcode_type",
+        "type": "select",
+        "required": false,
+        "maxSelect": 1,
+        "values": ["CODE128", "EAN13", "QR"]
+      },
+      { "id": "f_prod_price", "name": "price", "type": "number", "required": true, "min": 0 },
+      { "id": "f_prod_cost", "name": "cost", "type": "number", "required": false, "min": 0 },
+      {
+        "id": "f_prod_status",
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "maxSelect": 1,
+        "values": ["disponible", "vendido", "inventariado", "reservado"]
+      },
+      {
+        "id": "f_prod_category",
+        "name": "category",
+        "type": "relation",
+        "required": false,
+        "collectionId": "categories",
+        "maxSelect": 1,
+        "cascadeDelete": false
+      },
+      {
+        "id": "f_prod_photos",
+        "name": "photos",
+        "type": "file",
+        "required": false,
+        "maxSelect": 10,
+        "maxSize": 5242880,
+        "mimeTypes": ["image/jpeg", "image/png", "image/webp", "image/gif"]
+      },
+      {
+        "id": "f_prod_invoice",
+        "name": "invoice",
+        "type": "relation",
+        "required": false,
+        "collectionId": "invoices",
+        "maxSelect": 1,
+        "cascadeDelete": false
+      },
+      { "id": "f_prod_inventoried", "name": "inventoried", "type": "bool", "required": false },
+      { "id": "f_prod_inventoried_at", "name": "inventoried_at", "type": "date", "required": false },
+      {
+        "id": "f_prod_inventoried_by",
+        "name": "inventoried_by",
+        "type": "relation",
+        "required": false,
+        "collectionId": "users",
+        "maxSelect": 1,
+        "cascadeDelete": false
+      }
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "invoices",
+    "name": "invoices",
+    "type": "base",
+    "fields": [
+      { "id": "f_inv_number", "name": "number", "type": "text", "required": true },
+      { "id": "f_inv_supplier", "name": "supplier", "type": "text", "required": true },
+      { "id": "f_inv_date", "name": "date", "type": "date", "required": true },
+      { "id": "f_inv_total", "name": "total", "type": "number", "required": true, "min": 0 },
+      {
+        "id": "f_inv_file",
+        "name": "file",
+        "type": "file",
+        "required": false,
+        "maxSelect": 1,
+        "maxSize": 10485760,
+        "mimeTypes": ["application/pdf", "image/jpeg", "image/png"]
+      },
+      { "id": "f_inv_notes", "name": "notes", "type": "text", "required": false }
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "clients",
+    "name": "clients",
+    "type": "base",
+    "fields": [
+      { "id": "f_cli_name", "name": "name", "type": "text", "required": true },
+      { "id": "f_cli_email", "name": "email", "type": "email", "required": false },
+      { "id": "f_cli_phone", "name": "phone", "type": "text", "required": false },
+      { "id": "f_cli_address", "name": "address", "type": "text", "required": false },
+      { "id": "f_cli_notes", "name": "notes", "type": "text", "required": false },
+      { "id": "f_cli_frequent", "name": "is_frequent", "type": "bool", "required": false }
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "vouchers",
+    "name": "vouchers",
+    "type": "base",
+    "fields": [
+      { "id": "f_vou_number", "name": "number", "type": "text", "required": true },
+      { "id": "f_vou_date", "name": "date", "type": "date", "required": true },
+      {
+        "id": "f_vou_client",
+        "name": "client",
+        "type": "relation",
+        "required": false,
+        "collectionId": "clients",
+        "maxSelect": 1,
+        "cascadeDelete": false
+      },
+      { "id": "f_vou_total", "name": "total", "type": "number", "required": true, "min": 0 },
+      {
+        "id": "f_vou_status",
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "maxSelect": 1,
+        "values": ["pendiente", "completado", "cancelado"]
+      },
+      {
+        "id": "f_vou_payment",
+        "name": "payment_method",
+        "type": "select",
+        "required": true,
+        "maxSelect": 1,
+        "values": ["efectivo", "transferencia", "tarjeta", "otro"]
+      },
+      {
+        "id": "f_vou_images",
+        "name": "images",
+        "type": "file",
+        "required": false,
+        "maxSelect": 5,
+        "maxSize": 5242880,
+        "mimeTypes": ["image/jpeg", "image/png", "image/webp"]
+      },
+      { "id": "f_vou_notes", "name": "notes", "type": "text", "required": false }
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "voucher_items",
+    "name": "voucher_items",
+    "type": "base",
+    "fields": [
+      {
+        "id": "f_vi_voucher",
+        "name": "voucher",
+        "type": "relation",
+        "required": true,
+        "collectionId": "vouchers",
+        "maxSelect": 1,
+        "cascadeDelete": true
+      },
+      {
+        "id": "f_vi_product",
+        "name": "product",
+        "type": "relation",
+        "required": true,
+        "collectionId": "products",
+        "maxSelect": 1,
+        "cascadeDelete": false
+      },
+      { "id": "f_vi_quantity", "name": "quantity", "type": "number", "required": true, "min": 1 },
+      { "id": "f_vi_unit_price", "name": "unit_price", "type": "number", "required": true, "min": 0 },
+      { "id": "f_vi_subtotal", "name": "subtotal", "type": "number", "required": true, "min": 0 }
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "audit_logs",
+    "name": "audit_logs",
+    "type": "base",
+    "fields": [
+      {
+        "id": "f_al_user",
+        "name": "user",
+        "type": "relation",
+        "required": false,
+        "collectionId": "users",
+        "maxSelect": 1,
+        "cascadeDelete": false
+      },
+      {
+        "id": "f_al_action",
+        "name": "action",
+        "type": "select",
+        "required": true,
+        "maxSelect": 1,
+        "values": ["create", "update", "delete", "login", "logout", "inventory_check", "export"]
+      },
+      { "id": "f_al_collection", "name": "collection", "type": "text", "required": true },
+      { "id": "f_al_record_id", "name": "record_id", "type": "text", "required": false },
+      { "id": "f_al_description", "name": "description", "type": "text", "required": true },
+      { "id": "f_al_old_data", "name": "old_data", "type": "json", "required": false },
+      { "id": "f_al_new_data", "name": "new_data", "type": "json", "required": false }
+    ],
+    "listRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "viewRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": null,
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "landing_images",
+    "name": "landing_images",
+    "type": "base",
+    "fields": [
+      { "id": "f_li_title", "name": "title", "type": "text", "required": false },
+      {
+        "id": "f_li_image",
+        "name": "image",
+        "type": "file",
+        "required": true,
+        "maxSelect": 1,
+        "maxSize": 10485760,
+        "mimeTypes": ["image/jpeg", "image/png", "image/webp"]
+      },
+      { "id": "f_li_order", "name": "order", "type": "number", "required": false, "min": 0 },
+      { "id": "f_li_active", "name": "active", "type": "bool", "required": false }
+    ],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "delete_requests",
+    "name": "delete_requests",
+    "type": "base",
+    "fields": [
+      {
+        "id": "f_dr_requested_by",
+        "name": "requested_by",
+        "type": "relation",
+        "required": true,
+        "collectionId": "users",
+        "maxSelect": 1,
+        "cascadeDelete": false
+      },
+      { "id": "f_dr_collection_name", "name": "collection_name", "type": "text", "required": true },
+      { "id": "f_dr_record_id", "name": "record_id", "type": "text", "required": true },
+      { "id": "f_dr_record_label", "name": "record_label", "type": "text", "required": true },
+      {
+        "id": "f_dr_status",
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "maxSelect": 1,
+        "values": ["pending", "approved", "rejected"]
+      },
+      { "id": "f_dr_notes", "name": "notes", "type": "text", "required": false },
+      {
+        "id": "f_dr_resolved_by",
+        "name": "resolved_by",
+        "type": "relation",
+        "required": false,
+        "collectionId": "users",
+        "maxSelect": 1,
+        "cascadeDelete": false
+      },
+      { "id": "f_dr_resolved_at", "name": "resolved_at", "type": "date", "required": false }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != \"\" && (@request.auth.role = \"admin\" || requested_by = @request.auth.id)",
+    "viewRule": "@request.auth.id != \"\" && (@request.auth.role = \"admin\" || requested_by = @request.auth.id)",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "user_permissions",
+    "name": "user_permissions",
+    "type": "base",
+    "fields": [
+      {
+        "id": "f_up_user",
+        "name": "user",
+        "type": "relation",
+        "required": true,
+        "collectionId": "users",
+        "maxSelect": 1,
+        "cascadeDelete": true
+      },
+      { "id": "f_up_create_products", "name": "can_create_products", "type": "bool", "required": false },
+      { "id": "f_up_edit_products", "name": "can_edit_products", "type": "bool", "required": false },
+      { "id": "f_up_create_vouchers", "name": "can_create_vouchers", "type": "bool", "required": false },
+      { "id": "f_up_edit_vouchers", "name": "can_edit_vouchers", "type": "bool", "required": false },
+      { "id": "f_up_create_clients", "name": "can_create_clients", "type": "bool", "required": false },
+      { "id": "f_up_edit_clients", "name": "can_edit_clients", "type": "bool", "required": false },
+      { "id": "f_up_create_invoices", "name": "can_create_invoices", "type": "bool", "required": false },
+      { "id": "f_up_edit_invoices", "name": "can_edit_invoices", "type": "bool", "required": false },
+      { "id": "f_up_create_categories", "name": "can_create_categories", "type": "bool", "required": false },
+      { "id": "f_up_manage_inventory", "name": "can_manage_inventory", "type": "bool", "required": false }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "viewRule": "@request.auth.id != \"\" && (@request.auth.role = \"admin\" || user = @request.auth.id)",
+    "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  },
+  {
+    "id": "module_access",
+    "name": "module_access",
+    "type": "base",
+    "fields": [
+      {
+        "id": "f_ma_user",
+        "name": "user",
+        "type": "relation",
+        "required": true,
+        "collectionId": "users",
+        "maxSelect": 1,
+        "cascadeDelete": true
+      },
+      { "id": "f_ma_module", "name": "module", "type": "text", "required": true },
+      { "id": "f_ma_enabled", "name": "enabled", "type": "bool", "required": false }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "viewRule": "@request.auth.id != \"\" && (@request.auth.role = \"admin\" || user = @request.auth.id)",
+    "createRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "updateRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\"",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = \"admin\""
+  }
+]

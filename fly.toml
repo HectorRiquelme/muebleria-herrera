@@ -1,0 +1,22 @@
+# Fly.io config for PocketBase
+app = "muebleria-herrera-pb"
+primary_region = "gru"  # São Paulo — más cercano a Argentina
+
+[build]
+  dockerfile = "pb/Dockerfile"
+
+[http_service]
+  internal_port = 8090
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+[mounts]
+  source = "pb_data"
+  destination = "/pb/pb_data"

@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #8B5E3C;
+  --color-primary-dark: #6B4425;
+  --color-accent: #D4A853;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #2C2018;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}

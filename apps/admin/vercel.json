@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "framework": null,
+  "env": {
+    "PB_URL": "@pb_url"
+  }
+}

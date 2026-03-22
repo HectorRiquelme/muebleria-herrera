@@ -1,0 +1,20 @@
+{
+  "name": "muebleria-herrera",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:admin": "npm run dev --workspace=apps/admin",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev": "npm run dev:admin & npm run dev:web",
+    "build:admin": "npm run build --workspace=apps/admin",
+    "build:web": "npm run build --workspace=apps/web",
+    "build": "npm run build:admin && npm run build:web"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
