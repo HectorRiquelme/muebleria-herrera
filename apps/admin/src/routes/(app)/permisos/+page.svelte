@@ -12,7 +12,7 @@
 	);
 
 	const selectedWorkerData = $derived(
-		(data.workers as { id: string; name: string; email: string }[]).find((w) => w.id === selectedWorker)
+		(data.workers as unknown as { id: string; name: string; email: string }[]).find((w) => w.id === selectedWorker)
 	);
 
 	// Group permissions into sections
@@ -45,7 +45,7 @@
 	];
 
 	function getPermLabel(key: string): string {
-		return (data.permFields as { key: string; label: string }[]).find((p) => p.key === key)?.label ?? key;
+		return (data.permFields as unknown as { key: string; label: string }[]).find((p) => p.key === key)?.label ?? key;
 	}
 </script>
 

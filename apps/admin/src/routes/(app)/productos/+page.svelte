@@ -447,11 +447,11 @@
 							multiple
 							class="input"
 						/>
-						{#if editProduct?.photos?.length > 0}
+						{#if editProduct && editProduct.photos && editProduct.photos.length > 0}
 							<div class="flex gap-2 mt-2 flex-wrap">
 								{#each editProduct.photos as photo}
 									<img
-										src={`${import.meta.env.VITE_PB_URL ?? 'http://localhost:8090'}/api/files/products/${editProduct.id}/${photo}?thumb=80x80`}
+										src={`${import.meta.env.VITE_PB_URL ?? 'http://localhost:8090'}/api/files/products/${editProduct?.id ?? ''}/${photo}?thumb=80x80`}
 										alt="Foto del producto"
 										class="w-16 h-16 rounded-lg object-cover border border-[#E5E0D8]"
 									/>

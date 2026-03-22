@@ -7,7 +7,7 @@
 	type Worker = { id: string; name?: string; email: string };
 	type ModuleDef = { href: string; label: string; icon: string };
 
-	const workers = $derived(data.workers as Worker[]);
+	const workers = $derived(data.workers as unknown as Worker[]);
 	const workerModules = $derived(data.workerModules as readonly ModuleDef[]);
 	const accessMap = $derived(data.accessMap as Record<string, Record<string, boolean>>);
 

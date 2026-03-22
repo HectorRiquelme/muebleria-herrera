@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import { WORKER_MODULES } from '$lib/worker-modules';
 
-const WORKER_MODULE_HREFS = WORKER_MODULES.map((m) => m.href);
+const WORKER_MODULE_HREFS: string[] = WORKER_MODULES.map((m) => m.href);
 
 export const load: LayoutServerLoad = async ({ locals, url }) => {
 	if (!locals.user) {

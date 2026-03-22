@@ -12,11 +12,13 @@
 		{ src: '/slide3.jpg', title: 'Dormitorios' }
 	];
 
-	let pbImages = $derived((data.images ?? []).filter((i: { active: boolean }) => i.active));
+	type LandingImg = { id: string; image: string; title?: string; active: boolean };
+	const allImages = $derived((data.images ?? []) as unknown as LandingImg[]);
+	let pbImages = $derived(allImages.filter((i) => i.active));
 
 	let slides = $derived(
 		pbImages.length > 0
-			? pbImages.map((img: { id: string; image: string; title?: string }) => ({
+			? pbImages.map((img) => ({
 					src: `${PB_URL}/api/files/landing_images/${img.id}/${img.image}`,
 					title: img.title ?? 'Mueblería Herrera'
 				}))

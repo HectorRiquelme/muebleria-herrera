@@ -37,7 +37,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		filter: `created >= "${firstOfMonth}" && status = "completado"`
 	}).catch(() => []);
 
-	const monthTotal = monthVouchers.reduce((sum: number, v: { total?: number }) => sum + (v.total ?? 0), 0);
+	const monthTotal = monthVouchers.reduce((sum, v) => sum + ((v as unknown as { total?: number }).total ?? 0), 0 as number);
 
 	return {
 		stats: {

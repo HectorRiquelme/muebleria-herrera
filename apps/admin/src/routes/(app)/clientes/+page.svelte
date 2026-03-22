@@ -42,7 +42,7 @@
 	}
 
 	async function exportExcel() {
-		await exportClientsExcel(data.clients as Parameters<typeof exportClientsExcel>[0]);
+		await exportClientsExcel(data.clients as unknown as Parameters<typeof exportClientsExcel>[0]);
 	}
 </script>
 

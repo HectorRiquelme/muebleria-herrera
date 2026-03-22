@@ -103,7 +103,7 @@
 
 	async function exportSelectedPDF() {
 		const selected = data.vouchers.filter((voucher) => selectedIds.includes(voucher.id));
-		await exportMultipleVouchersPDF(selected as Parameters<typeof exportMultipleVouchersPDF>[0]);
+		await exportMultipleVouchersPDF(selected as unknown as Parameters<typeof exportMultipleVouchersPDF>[0]);
 	}
 
 	function exportCsv() {
@@ -117,9 +117,9 @@
 	async function exportSinglePDF(voucher: (typeof data.vouchers)[0]) {
 		const items = await fetch(`/api/voucher-items/${voucher.id}`).then((r) => r.json()).catch(() => []);
 		await exportVoucherPDF(
-			voucher as Parameters<typeof exportVoucherPDF>[0],
+			voucher as unknown as Parameters<typeof exportVoucherPDF>[0],
 			items,
-			voucher.expand?.client as Parameters<typeof exportVoucherPDF>[2]
+			voucher.expand?.client as unknown as Parameters<typeof exportVoucherPDF>[2]
 		);
 	}
 </script>

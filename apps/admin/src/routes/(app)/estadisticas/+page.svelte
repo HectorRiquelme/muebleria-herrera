@@ -51,7 +51,7 @@
 		const catLabels = data.monthLabels.map(monthLabel);
 
 		const catDatasets = categoryIds.map((catId, idx) => {
-			const cat = (data.categories as { id: string; name: string }[]).find((c) => c.id === catId);
+			const cat = (data.categories as unknown as { id: string; name: string }[]).find((c) => c.id === catId);
 			return {
 				label: cat?.name ?? 'Sin categoría',
 				data: data.monthLabels.map((m) => data.categoryTotals[m]?.[catId] ?? 0),
@@ -71,7 +71,7 @@
 					legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } },
 					tooltip: {
 						callbacks: {
-							label: (ctx) => ` ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
+							label: (ctx) => ` ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y ?? 0)}`
 						}
 					},
 					title: {
@@ -117,13 +117,13 @@
 						legend: { display: false },
 						tooltip: {
 							callbacks: {
-								label: (ctx) => ` ${formatCurrency(ctx.parsed.x)}`
+								label: (ctx) => ` ${formatCurrency(ctx.parsed.x ?? 0)}`
 							}
 						},
 						title: {
 							display: true,
 							text: selectedCategory
-								? `Productos más vendidos — ${(data.categories as {id:string;name:string}[]).find((c) => c.id === selectedCategory)?.name ?? ''}`
+								? `Productos más vendidos — ${(data.categories as unknown as {id:string;name:string}[]).find((c) => c.id === selectedCategory)?.name ?? ''}`
 								: 'Productos más vendidos (todas las categorías)',
 							font: { size: 14, weight: 'bold' },
 							color: '#2C2018',
@@ -168,7 +168,7 @@
 					legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } },
 					tooltip: {
 						callbacks: {
-							label: (ctx) => ` ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
+							label: (ctx) => ` ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y ?? 0)}`
 						}
 					},
 					title: {
@@ -269,7 +269,7 @@
 				<h2 class="font-semibold text-[#2C2018]">Productos más vendidos</h2>
 				<p class="text-xs text-[#7A6652]">
 					{selectedCategory
-						? `Mostrando productos de: ${(data.categories as {id:string;name:string}[]).find((c) => c.id === selectedCategory)?.name ?? ''}`
+						? `Mostrando productos de: ${(data.categories as unknown as {id:string;name:string}[]).find((c) => c.id === selectedCategory)?.name ?? ''}`
 						: 'Todos los productos en el rango — seleccioná una categoría para ver el detalle'}
 				</p>
 			</div>

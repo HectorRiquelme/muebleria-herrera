@@ -4,7 +4,15 @@
 
 	let { data }: { data: PageData } = $props();
 
-	const stats = $derived(data.stats);
+	type Stats = {
+		availableProducts: number;
+		totalVouchers: number;
+		totalClients: number;
+		totalInvoices: number;
+		monthTotal: number;
+		pendingDeleteRequests: number;
+	};
+	const stats = $derived(data.stats as unknown as Stats);
 	const recentVouchers = $derived(data.recentVouchers);
 	const recentProducts = $derived(data.recentProducts);
 </script>
