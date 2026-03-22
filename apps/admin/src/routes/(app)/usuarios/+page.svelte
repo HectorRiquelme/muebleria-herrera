@@ -92,7 +92,7 @@
 		<div class="bg-white rounded-xl shadow-xl w-full max-w-md">
 			<div class="flex items-center justify-between p-6 border-b border-[#E5E0D8]">
 				<h2 class="text-lg font-semibold text-[#2C2018]">{editUser ? 'Editar usuario' : 'Nuevo usuario'}</h2>
-				<button onclick={closeModal} class="text-[#7A6652] hover:text-[#2C2018]">
+				<button onclick={closeModal} aria-label="Cerrar" class="text-[#7A6652] hover:text-[#2C2018]">
 					<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
 				</button>
 			</div>

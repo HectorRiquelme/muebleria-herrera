@@ -35,6 +35,13 @@ export const actions: Actions = {
 	},
 
 	update: async ({ request, locals }) => {
+		if (locals.user?.role === 'worker') {
+			const perms = await locals.pb.collection('user_permissions')
+				.getFirstListItem(`user = "${locals.user.id}"`)
+				.catch(() => null);
+			if (perms !== null && perms.can_edit_categories === false) return fail(403, { error: 'No tienes permiso para editar categorías' });
+		}
+
 		const data = await request.formData();
 		const id = data.get('id')?.toString();
 		const name = data.get('name')?.toString().trim();

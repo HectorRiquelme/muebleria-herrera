@@ -360,6 +360,7 @@
       { "id": "f_up_create_invoices", "name": "can_create_invoices", "type": "bool", "required": false },
       { "id": "f_up_edit_invoices", "name": "can_edit_invoices", "type": "bool", "required": false },
       { "id": "f_up_create_categories", "name": "can_create_categories", "type": "bool", "required": false },
+      { "id": "f_up_edit_categories", "name": "can_edit_categories", "type": "bool", "required": false },
       { "id": "f_up_manage_inventory", "name": "can_manage_inventory", "type": "bool", "required": false }
     ],
     "indexes": [],

@@ -51,6 +51,12 @@ export const actions: Actions = {
 
 		try {
 			await locals.pb.collection('landing_images').update(id, { active: !active });
+			await locals.pb.collection('audit_logs').create({
+				user: locals.user?.id, action: 'update', collection: 'landing_images',
+				record_id: id,
+				description: `Imagen del landing ${!active ? 'activada' : 'desactivada'}`,
+				old_data: JSON.stringify({ active }), new_data: JSON.stringify({ active: !active })
+			}).catch(() => {});
 			return { success: true };
 		} catch (err: unknown) {
 			const e = err as { message?: string };
@@ -66,7 +72,14 @@ export const actions: Actions = {
 		if (!id) return fail(400, { error: 'ID requerido' });
 
 		try {
-			await locals.pb.collection('landing_images').update(id, { order: parseInt(order ?? '0') });
+			const newOrder = parseInt(order ?? '0');
+			await locals.pb.collection('landing_images').update(id, { order: newOrder });
+			await locals.pb.collection('audit_logs').create({
+				user: locals.user?.id, action: 'update', collection: 'landing_images',
+				record_id: id,
+				description: `Orden de imagen actualizado a ${newOrder}`,
+				old_data: '', new_data: JSON.stringify({ order: newOrder })
+			}).catch(() => {});
 			return { success: true };
 		} catch (err: unknown) {
 			const e = err as { message?: string };

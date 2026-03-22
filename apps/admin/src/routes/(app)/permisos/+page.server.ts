@@ -11,6 +11,7 @@ const PERM_FIELDS = [
 	{ key: 'can_create_invoices', label: 'Crear facturas' },
 	{ key: 'can_edit_invoices', label: 'Editar facturas' },
 	{ key: 'can_create_categories', label: 'Crear categorías' },
+	{ key: 'can_edit_categories', label: 'Editar categorías' },
 	{ key: 'can_manage_inventory', label: 'Gestionar inventario' }
 ] as const;
 

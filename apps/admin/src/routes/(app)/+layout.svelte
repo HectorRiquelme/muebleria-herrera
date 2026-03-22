@@ -210,6 +210,7 @@
 			{/if}
 			<button
 				onclick={logout}
+				aria-label="Cerrar sesión"
 				class="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors w-full"
 			>
 				<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -224,6 +225,7 @@
 		<!-- Toggle sidebar -->
 		<button
 			onclick={() => (sidebarOpen = !sidebarOpen)}
+			aria-label="Alternar barra lateral"
 			class="absolute left-0 bottom-16 bg-[#8B5E3C] rounded-r-md p-1 text-white hidden lg:block"
 			style="left: {sidebarOpen ? '256px' : '64px'}; transition: left 0.3s;"
 		>

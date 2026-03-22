@@ -1,5 +1,6 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
-import type { AuthModel } from 'pocketbase';
+import type PocketBase from 'pocketbase';
+import type { User } from '$lib/types';
 
 declare global {
 	namespace App {
@@ -7,11 +8,11 @@ declare global {
 			message: string;
 		}
 		interface Locals {
-			user: AuthModel | null;
-			pb: import('pocketbase').default;
+			user: User | null;
+			pb: PocketBase;
 		}
 		interface PageData {
-			user?: AuthModel | null;
+			user?: User | null;
 		}
 	}
 }

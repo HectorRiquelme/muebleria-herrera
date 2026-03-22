@@ -42,12 +42,21 @@ export const actions: Actions = {
 
 		try {
 			const logs = await locals.pb.collection('audit_logs').getFullList({ fields: 'id' });
+			const count = logs.length;
+
+			// Registrar ANTES de borrar para que quede constancia
+			await locals.pb.collection('audit_logs').create({
+				user: locals.user?.id, action: 'delete', collection: 'audit_logs',
+				record_id: '',
+				description: `Limpieza de auditoría: ${count} registros eliminados`,
+				old_data: JSON.stringify({ count }), new_data: ''
+			}).catch(() => {});
 
 			for (const log of logs) {
 				await locals.pb.collection('audit_logs').delete(log.id);
 			}
 
-			return { success: true, cleared: logs.length };
+			return { success: true, cleared: count };
 		} catch (err: unknown) {
 			const error = err as { message?: string };
 			return fail(400, { error: error.message ?? 'No se pudo limpiar la auditoría' });

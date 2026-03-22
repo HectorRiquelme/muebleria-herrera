@@ -1,8 +1,9 @@
 import PocketBase from 'pocketbase';
 import { redirect } from '@sveltejs/kit';
 import type { Handle } from '@sveltejs/kit';
+import type { User } from '$lib/types';
 
-const PUBLIC_ROUTES = ['/login', '/api'];
+const PUBLIC_ROUTES = ['/login'];
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const pb = new PocketBase(
@@ -22,7 +23,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	event.locals.pb = pb;
-	event.locals.user = pb.authStore.isValid ? pb.authStore.model : null;
+	event.locals.user = pb.authStore.isValid ? (pb.authStore.model as unknown as User) : null;
 
 	// Guard: redirect to login if not authenticated
 	const isPublic = PUBLIC_ROUTES.some((r) => event.url.pathname.startsWith(r));

@@ -11,6 +11,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 	]);
 
 	// Pending delete requests (only for admin)
+	// Desactivar auto-cancelacion: layout tambien consulta delete_requests
+	pb.autoCancellation(false);
 	const pendingRequests = locals.user?.role === 'admin'
 		? await pb.collection('delete_requests').getList(1, 1, { filter: 'status = "pending"' }).catch(() => ({ totalItems: 0 }))
 		: { totalItems: 0 };

@@ -6,6 +6,10 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	const pb = locals.pb;
 
+	// Desactivar auto-cancelacion para evitar conflicto con layout
+	// que tambien consulta delete_requests (SvelteKit ejecuta layout + page en paralelo)
+	pb.autoCancellation(false);
+
 	const requests = await pb.collection('delete_requests').getFullList({
 		sort: '-created',
 		expand: 'requested_by,resolved_by'
