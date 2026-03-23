@@ -147,7 +147,8 @@ Cada `+page.server.ts` debe:
 
 ## Datos de contacto de la web publica (definitivos)
 
-- WhatsApp: +56 44 367 4412
+- WhatsApp (movil): +56 9 6875 3831
+- Telefono fijo: +56 44 367 4412
 - Direccion: Anibal Pinto 253, Parral, Region del Maule
 - Horario: Lun-Vie 9:30-18:30 | Sab 10:00-13:00
 - Instagram: https://instagram.com/muebleria.herrera

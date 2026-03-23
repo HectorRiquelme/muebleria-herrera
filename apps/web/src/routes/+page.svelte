@@ -37,7 +37,8 @@
 		}
 	});
 
-	const whatsappNumber = '+56443674412';
+	const whatsappNumber = '+56 9 6875 3831';
+	const phoneNumber = '+56 44 367 4412';
 	const instagramUrl = 'https://instagram.com/muebleria.herrera';
 	const facebookUrl = 'https://facebook.com/muebleriaherrera';
 	const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}`;
@@ -312,6 +313,18 @@
 							<p class="text-stone-500 text-sm">Sábado: 10:00 – 13:00</p>
 						</div>
 					</div>
+
+					<div class="flex items-start gap-3">
+						<div class="w-9 h-9 bg-[#8B5E3C]/10 rounded-xl flex items-center justify-center shrink-0 mt-0.5">
+							<svg class="w-4 h-4 text-[#8B5E3C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+							</svg>
+						</div>
+						<div>
+							<p class="text-xs font-semibold text-[#8B5E3C] uppercase tracking-wide">Teléfono fijo</p>
+							<p class="text-stone-700 text-sm font-medium">{phoneNumber}</p>
+						</div>
+					</div>
 				</div>
 
 				<!-- Social links -->
@@ -395,6 +408,10 @@
 					<li class="flex items-center gap-2">
 						<span>🕐</span>
 						<span>Lun–Vie 9:30–18:30 | Sáb 10:00–13:00</span>
+					</li>
+					<li class="flex items-center gap-2">
+						<span>📞</span>
+						<span>{phoneNumber}</span>
 					</li>
 					<li>
 						<a href={whatsappUrl} target="_blank" class="flex items-center gap-2 hover:text-white transition-colors">
