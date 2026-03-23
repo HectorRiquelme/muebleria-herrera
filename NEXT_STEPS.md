@@ -1,6 +1,6 @@
 # NEXT_STEPS.md — Pendientes Priorizados
 
-> Ultima actualizacion: 23 marzo 2026 (sesion nocturna). Deploy completo, produccion funcional.
+> Ultima actualizacion: 23 marzo 2026 (sesion nocturna, 2da ronda). D2, D7 sincronizados al repo. WhatsApp corregido.
 
 ---
 
@@ -11,11 +11,9 @@
 - **Que falta:** Comprar dominio, apuntar DNS, Caddy genera HTTPS automaticamente.
 - **Siguiente paso exacto:** Decidir dominio (ej: muebleriaherrera.cl), comprar, configurar DNS A record → 34.46.122.42, actualizar `/etc/caddy/Caddyfile` con el dominio.
 
-### D2 — Sincronizar `autoCancellation(false)` entre local y produccion
-- **Que se hizo:** En produccion, `hooks.server.ts` tiene `pb.autoCancellation(false)` global (editado directamente en la VM). En el repo local NO lo tiene.
-- **Que falta:** Agregar `pb.autoCancellation(false)` al hooks.server.ts del repo.
+### ~~D2 — Sincronizar `autoCancellation(false)` entre local y produccion~~ ✅ RESUELTO
+- **Que se hizo:** `pb.autoCancellation(false)` agregado globalmente en `hooks.server.ts` del repo local. Ahora local y produccion estan sincronizados.
 - **Archivo:** `apps/admin/src/hooks.server.ts`
-- **Siguiente paso exacto:** En local, agregar `pb.autoCancellation(false);` despues de la linea `const pb = new PocketBase(...)`, commit, push, pull en VM.
 
 ### D3 — Probar modulo de respaldos en runtime
 - **Que se hizo:** Modulo `/respaldos` implementado con export ZIP e import con validacion. Build OK.
@@ -39,13 +37,9 @@
 - **Riesgo:** El schema format cambio entre versiones (`schema` vs `fields`). Importar via API entre versiones falla por IDs de colecciones.
 - **Siguiente paso:** Evaluar actualizar PB local a v0.25.9 o mantener y documentar.
 
-### D7 — Sincronizar `BODY_SIZE_LIMIT` y `bodyParser` config
-- **Que se hizo:** En produccion, el servicio `muebleria-admin.service` tiene `Environment=BODY_SIZE_LIMIT=Infinity` para permitir subir imagenes > 512KB. Tambien se agrego `export const config = { bodyParser: { sizeLimit: '20mb' } }` en `landing/+page.server.ts` (solo en VM, no en repo).
-- **Que falta:** Decidir si commitear estos cambios al repo o dejarlos solo en produccion.
-- **Archivos:**
-  - `/etc/systemd/system/muebleria-admin.service` (variable BODY_SIZE_LIMIT)
-  - `apps/admin/src/routes/(app)/landing/+page.server.ts` (bodyParser config)
-- **Siguiente paso exacto:** Agregar `export const config = { bodyParser: { sizeLimit: '20mb' } };` al `landing/+page.server.ts` en el repo local, commit, push.
+### ~~D7 — Sincronizar `BODY_SIZE_LIMIT` y `bodyParser` config~~ ✅ RESUELTO
+- **Que se hizo:** `export const config = { bodyParser: { sizeLimit: '20mb' } }` agregado a `landing/+page.server.ts` en el repo local. `BODY_SIZE_LIMIT=Infinity` se mantiene solo en produccion (variable de entorno en systemd).
+- **Archivo:** `apps/admin/src/routes/(app)/landing/+page.server.ts`
 
 ### D8 — Texto web publica: contenido generico pendiente de personalizar
 - **Que se hizo:** Corregido "Mas de 50 anos de experiencia" (commit `63e51bd`).
@@ -96,8 +90,8 @@
 ### Diferencias produccion vs repo local
 | Archivo/Config | Repo local | Produccion VM |
 |---|---|---|
-| `hooks.server.ts` | Sin `autoCancellation(false)` | Con `autoCancellation(false)` global |
-| `landing/+page.server.ts` | Sin bodyParser config | Con `export const config = { bodyParser: { sizeLimit: '20mb' } }` |
+| `hooks.server.ts` | ~~Sin `autoCancellation(false)`~~ → **Sincronizado** | Con `autoCancellation(false)` global |
+| `landing/+page.server.ts` | ~~Sin bodyParser config~~ → **Sincronizado** | Con `export const config = { bodyParser: { sizeLimit: '20mb' } }` |
 | `.env` admin/web | `VITE_PB_URL=http://localhost:8090` | `VITE_PB_URL=http://34.46.122.42` |
 | `svelte.config.js` admin | Sin csrf config | Con `csrf: { checkOrigin: false }` |
 | PocketBase version | v0.22.9 | v0.25.9 |
@@ -133,6 +127,9 @@ systemctl restart muebleria-web    # si cambio web
 - `VITE_PB_URL=http://34.46.122.42` en .env produccion (resuelve URLs de imagenes en browser)
 - Separacion admin en :5175 (resuelve conflicto de `/_app/*` entre admin y web)
 - Texto "Mas de 50 anos de experiencia" corregido en web publica
+- WhatsApp corregido a numero movil +56 9 6875 3831. Telefono fijo +56 44 367 4412 agregado en contacto y footer.
+- D2 sincronizado: `autoCancellation(false)` global ahora en repo local
+- D7 sincronizado: `bodyParser sizeLimit 20mb` ahora en repo local
 
 ### Lecciones aprendidas del deploy
 1. **PB import via API es fragil:** IDs de colecciones colisionan con nombres en PB v0.25+. Solucion: copiar data.db directamente.

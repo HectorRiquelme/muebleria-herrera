@@ -1,6 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
+export const config = { bodyParser: { sizeLimit: '20mb' } };
+
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.user?.role !== 'admin') throw redirect(303, '/dashboard');
 

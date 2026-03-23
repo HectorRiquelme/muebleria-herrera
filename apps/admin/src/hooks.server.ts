@@ -10,6 +10,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		process.env.PB_URL ?? 'http://localhost:8090'
 	);
 
+	// Desactivar auto-cancelacion: layout y page comparten esta instancia en paralelo
+	pb.autoCancellation(false);
+
 	// Load auth from cookie
 	const cookie = event.request.headers.get('cookie') ?? '';
 	pb.authStore.loadFromCookie(cookie, 'pb_auth');
