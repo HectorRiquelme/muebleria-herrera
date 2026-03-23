@@ -20,9 +20,8 @@
 - **Que falta:** Probar con datos reales en produccion.
 - **Siguiente paso exacto:** Ir a `http://34.46.122.42:5175/respaldos`, probar exportar, verificar ZIP, probar importar.
 
-### D4 — Verificar `inventario/unmarkInventory` permisos
-- **Que se hizo:** `markInventory` valida `can_manage_inventory`. `unmarkInventory` solo verifica rol admin.
-- **Que falta:** Decidir si es intencional o un gap.
+### ~~D4 — Verificar `inventario/unmarkInventory` permisos~~ ✅ RESUELTO
+- **Que se hizo:** `unmarkInventory` ahora valida `can_manage_inventory` para workers, igual que `markInventory`. Consistencia completa.
 - **Archivo:** `apps/admin/src/routes/(app)/inventario/+page.server.ts`
 
 ### D5 — Ejecutar migracion `can_edit_categories` en PocketBase produccion

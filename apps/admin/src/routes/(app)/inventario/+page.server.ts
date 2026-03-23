@@ -72,7 +72,12 @@ export const actions: Actions = {
 	},
 
 	unmarkInventory: async ({ request, locals }) => {
-		if (locals.user?.role !== 'admin') return fail(403, { error: 'Sin permisos' });
+		if (locals.user?.role === 'worker') {
+			const perms = await locals.pb.collection('user_permissions')
+				.getFirstListItem(`user = "${locals.user.id}"`)
+				.catch(() => null);
+			if (perms !== null && perms.can_manage_inventory === false) return fail(403, { error: 'No tienes permiso para gestionar el inventario' });
+		}
 		const data = await request.formData();
 		const id = data.get('id')?.toString();
 		if (!id) return fail(400, { error: 'ID requerido' });
