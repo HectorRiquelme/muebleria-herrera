@@ -71,7 +71,8 @@ export const GET: RequestHandler = async ({ locals }) => {
 	zip.file('manifest.json', JSON.stringify(manifest, null, 2));
 
 	// Generate ZIP
-	const zipBuffer = await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+	const zipData = await zip.generateAsync({ type: 'arraybuffer', compression: 'DEFLATE' });
+	const zipBlob = new Blob([zipData], { type: 'application/zip' });
 
 	// Audit log
 	await pb.collection('audit_logs').create({
@@ -85,11 +86,11 @@ export const GET: RequestHandler = async ({ locals }) => {
 	}).catch(() => {});
 
 	const dateStr = now.toISOString().slice(0, 10);
-	return new Response(zipBuffer, {
+	return new Response(zipBlob, {
 		headers: {
 			'Content-Type': 'application/zip',
 			'Content-Disposition': `attachment; filename="respaldo-muebleria-${dateStr}.zip"`,
-			'Content-Length': String(zipBuffer.length)
+			'Content-Length': String(zipData.byteLength)
 		}
 	});
 };
