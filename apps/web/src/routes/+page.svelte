@@ -219,7 +219,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 			<div>
 				<p class="text-[#8B5E3C] text-sm font-semibold tracking-widest uppercase mb-3">Quiénes somos</p>
-				<h2 class="text-3xl sm:text-4xl font-bold text-[#2C2018] mb-2">Más de años de <span class="text-[#8B5E3C]">experiencia</span></h2>
+				<h2 class="text-3xl sm:text-4xl font-bold text-[#2C2018] mb-2">Más de 50 años de <span class="text-[#8B5E3C]">experiencia</span></h2>
 				<div class="w-16 h-1 bg-[#D4A853] rounded-full mb-6"></div>
 				<p class="text-stone-600 leading-relaxed mb-4 text-lg">
 					Mueblería Herrera es una empresa familiar con años de experiencia en la venta de muebles de calidad. Nos especializamos en ofrecer soluciones para tu hogar con productos duraderos y estéticos.
