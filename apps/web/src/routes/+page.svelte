@@ -177,9 +177,9 @@
 	<div class="max-w-6xl mx-auto px-4 sm:px-8">
 		<div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center text-white">
 			{#each [
-				{ icon: '🛋️', title: 'Gran variedad', desc: 'Living, dormitorio, comedor y más' },
-				{ icon: '✅', title: 'Calidad garantizada', desc: 'Productos duraderos y estéticos' },
-				{ icon: '💬', title: 'Asesoría personalizada', desc: 'Te ayudamos a elegir' },
+				{ icon: '🛋️', title: '+500 productos', desc: 'Living, dormitorio, comedor y más' },
+				{ icon: '⭐', title: '50+ años', desc: 'De confianza en Parral' },
+				{ icon: '💬', title: 'Asesoría gratuita', desc: 'Te ayudamos a elegir' },
 				{ icon: '📍', title: 'Parral, Maule', desc: 'Aníbal Pinto 253' }
 			] as item}
 				<div class="flex flex-col items-center gap-2">
@@ -223,10 +223,10 @@
 				<h2 class="text-3xl sm:text-4xl font-bold text-[#2C2018] mb-2">Más de 50 años de <span class="text-[#8B5E3C]">experiencia</span></h2>
 				<div class="w-16 h-1 bg-[#D4A853] rounded-full mb-6"></div>
 				<p class="text-stone-600 leading-relaxed mb-4 text-lg">
-					Mueblería Herrera es una empresa familiar con años de experiencia en la venta de muebles de calidad. Nos especializamos en ofrecer soluciones para tu hogar con productos duraderos y estéticos.
+					Mueblería Herrera es una empresa familiar fundada en Parral hace más de 50 años. Desde nuestros inicios, nos hemos dedicado a ofrecer muebles de calidad para el hogar, con atención personalizada y precios accesibles para toda la comunidad.
 				</p>
 				<p class="text-stone-600 leading-relaxed mb-6">
-					Contamos con una amplia variedad de muebles para living, comedor, dormitorio y más. Nuestro equipo está siempre disponible para asesorarte y ayudarte a encontrar los muebles perfectos.
+					Contamos con una amplia variedad de muebles para living, comedor, dormitorio, cocina y más. Trabajamos con las mejores marcas nacionales y ofrecemos opciones de financiamiento para que puedas equipar tu hogar sin complicaciones.
 				</p>
 				<a href={whatsappUrl} target="_blank"
 					class="inline-flex items-center gap-2 bg-[#8B5E3C] hover:bg-[#6B4425] text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all text-sm">
@@ -238,10 +238,10 @@
 			</div>
 			<div class="grid grid-cols-2 gap-4">
 				{#each [
-					{ icon: '🏠', label: 'Experiencia en muebles', color: 'bg-amber-50 border-amber-100' },
-					{ icon: '👥', label: 'Clientes satisfechos', color: 'bg-emerald-50 border-emerald-100' },
-					{ icon: '✅', label: 'Calidad garantizada', color: 'bg-blue-50 border-blue-100' },
-					{ icon: '💳', label: 'Financiación disponible', color: 'bg-purple-50 border-purple-100' }
+					{ icon: '🏠', label: '50+ años en Parral', color: 'bg-amber-50 border-amber-100' },
+					{ icon: '👥', label: 'Familia Herrera', color: 'bg-emerald-50 border-emerald-100' },
+					{ icon: '🚚', label: 'Despacho a domicilio', color: 'bg-blue-50 border-blue-100' },
+					{ icon: '💳', label: 'Crédito directo', color: 'bg-purple-50 border-purple-100' }
 				] as item}
 					<div class="rounded-2xl border-2 {item.color} p-6 flex flex-col items-center text-center gap-3 hover:scale-105 transition-transform">
 						<span class="text-4xl">{item.icon}</span>

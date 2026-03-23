@@ -29,25 +29,21 @@
 - **Que falta:** La migracion existe en el repo pero PB produccion usa data.db copiada de local. Si local no ejecuto la migracion, produccion tampoco la tiene.
 - **Siguiente paso exacto:** En la VM, reiniciar PB: `systemctl restart pocketbase`. Verificar en `http://34.46.122.42/_/` que `user_permissions` tiene `can_edit_categories`.
 
-### D6 — Unificar version de PocketBase local vs produccion
-- **Local:** PB v0.22.9 (binario Windows)
-- **Produccion:** PB v0.25.9 (binario Linux)
-- **SDK:** v0.26.8
-- **Riesgo:** El schema format cambio entre versiones (`schema` vs `fields`). Importar via API entre versiones falla por IDs de colecciones.
-- **Siguiente paso:** Evaluar actualizar PB local a v0.25.9 o mantener y documentar.
+### ~~D6 — Unificar version de PocketBase local vs produccion~~ ✅ RESUELTO
+- **Que se hizo:** PB local actualizado de v0.22.9 a v0.25.9. Dockerfile actualizado. Ambos entornos ahora usan v0.25.9.
+- **Archivos:** `pb/pocketbase.exe` (binario), `pb/Dockerfile` (ARG PB_VERSION=0.25.9)
 
 ### ~~D7 — Sincronizar `BODY_SIZE_LIMIT` y `bodyParser` config~~ ✅ RESUELTO
 - **Que se hizo:** `export const config = { bodyParser: { sizeLimit: '20mb' } }` agregado a `landing/+page.server.ts` en el repo local. `BODY_SIZE_LIMIT=Infinity` se mantiene solo en produccion (variable de entorno en systemd).
 - **Archivo:** `apps/admin/src/routes/(app)/landing/+page.server.ts`
 
-### D8 — Texto web publica: contenido generico pendiente de personalizar
-- **Que se hizo:** Corregido "Mas de 50 anos de experiencia" (commit `63e51bd`).
-- **Que falta:** Revisar otros textos genericos en la web publica que necesitan datos reales del negocio.
+### ~~D8 — Texto web publica: contenido generico pendiente de personalizar~~ ✅ RESUELTO
+- **Que se hizo:** Textos personalizados con datos mock coherentes para muebleria de 50+ anos en Parral.
+  - "Quienes somos": historia familiar, financiamiento, marcas nacionales
+  - Stats bar: "+500 productos", "50+ anos", "Asesoria gratuita"
+  - Cards: "50+ anos en Parral", "Familia Herrera", "Despacho a domicilio", "Credito directo"
 - **Archivo:** `apps/web/src/routes/+page.svelte`
-- **Textos a revisar:**
-  - "empresa familiar con anos de experiencia" (linea ~225) — confirmar si 50 anos es correcto
-  - Seccion "Quienes somos" — personalizar con historia real del negocio
-  - Grid de stats (Experiencia en muebles, Clientes satisfechos, etc.) — agregar numeros reales si hay
+- **Nota:** Los textos son mock razonables. El usuario puede ajustar datos exactos despues.
 
 ---
 
@@ -93,7 +89,7 @@
 | `landing/+page.server.ts` | ~~Sin bodyParser config~~ → **Sincronizado** | Con `export const config = { bodyParser: { sizeLimit: '20mb' } }` |
 | `.env` admin/web | `VITE_PB_URL=http://localhost:8090` | `VITE_PB_URL=http://34.46.122.42` |
 | `svelte.config.js` admin | Sin csrf config | Con `csrf: { checkOrigin: false }` |
-| PocketBase version | v0.22.9 | v0.25.9 |
+| PocketBase version | ~~v0.22.9~~ → **v0.25.9** | v0.25.9 |
 
 ### Proceso de deploy (actualizaciones)
 ```bash
