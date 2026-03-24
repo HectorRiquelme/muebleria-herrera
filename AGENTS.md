@@ -112,13 +112,13 @@ users, products, categories, invoices, vouchers, voucher_items, clients, audit_l
 
 ### URLs produccion
 - Web publica: http://34.46.122.42/
-- Panel admin: http://34.46.122.42/login
+- Panel admin: http://34.46.122.42:5175/
 - PocketBase admin: http://34.46.122.42/_/
 
 ### Caddy routing
-- `/_/*` y `/api/*` → PocketBase :8090
-- `/login`, `/dashboard`, `/productos`, etc. + `/_app/*` → Admin :3000
-- Default → Web :5174
+- `:80` → `/api/*` y `/_/*` → PocketBase :8090
+- `:80` → default → Web :5174
+- `:5175` → Admin :3000 (puerto separado, evita conflicto `/_app/*`)
 
 ## Riesgos activos
 

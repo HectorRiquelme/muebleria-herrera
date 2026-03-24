@@ -97,14 +97,14 @@ URL de archivos: `{PB_URL}/api/files/{collectionId}/{recordId}/{filename}?thumb=
 | **PocketBase** | v0.25.9, systemd, puerto 8090 interno |
 | **Admin app** | Node.js + SvelteKit build, systemd, puerto 3000 interno |
 | **Web app** | Node.js + SvelteKit build, systemd, puerto 5174 interno |
-| **Reverse proxy** | Caddy en puerto 80 |
+| **Reverse proxy** | Caddy en puerto 80 (web+PB) y 5175 (admin) |
 | **DB** | Copia de data.db local subida via SSH |
 
 ### URLs
 | Servicio | URL |
 |---|---|
 | Web publica | http://34.46.122.42/ |
-| Panel admin | http://34.46.122.42/login |
+| Panel admin | http://34.46.122.42:5175/ |
 | PocketBase admin | http://34.46.122.42/_/ |
 
 ### Credenciales produccion
