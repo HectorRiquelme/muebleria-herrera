@@ -84,8 +84,7 @@ URL de archivos: `{PB_URL}/api/files/{collectionId}/{recordId}/{filename}?thumb=
 ## Deuda tecnica residual
 
 1. **Warnings de svelte-check (54 admin + 3 web):** Mayormente `a11y_consider_explicit_label` y tipos inferidos. No bloquean build ni runtime.
-2. **`inventario/unmarkInventory`:** No verifica `user_permissions`. Gap menor (solo admin usa esta accion).
-3. **Migracion `can_edit_categories`:** Archivo creado en `pb/pb_migrations/`, pendiente de ejecutar (se aplica al reiniciar PocketBase).
+2. **Migracion `can_edit_categories`:** Archivo creado en `pb/pb_migrations/`, pendiente de ejecutar en produccion (se aplica al reiniciar PocketBase).
 
 ## Produccion — Google Cloud VM
 

@@ -12,7 +12,7 @@
 ## Stack (definitivo — no cambiar)
 
 - **Frontend:** SvelteKit ^2.50.2, Svelte 5 con runes, TailwindCSS v4 (via @tailwindcss/vite, sin tailwind.config.js), TypeScript
-- **Backend:** PocketBase v0.25.9 en produccion, v0.22.9 local (binario, REST + SQLite embebido + auth JWT + file storage)
+- **Backend:** PocketBase v0.25.9 en local y produccion (binario, REST + SQLite embebido + auth JWT + file storage)
 - **Build:** Vite ^7.3.1, adapter-node en ambas apps
 - **Librerias admin:** Chart.js, jsPDF, xlsx, bwip-js, jszip, clsx + tailwind-merge, bits-ui, lucide-svelte
 
@@ -71,7 +71,7 @@ muebleria-herrera/
    ```
 9. **Interfaz en espanol.** Todo texto visible, label y mensaje de error en espanol.
 10. **No proponer refactor masivo** sin que el usuario lo pida.
-11. **`user_permissions` implementado server-side** en create/update de productos, ventas, clientes, facturas, categorias (create+update), inventario (mark). Falta en: `inventario/unmarkInventory`.
+11. **`user_permissions` implementado server-side** en create/update de productos, ventas, clientes, facturas, categorias (create+update), inventario (mark+unmark). Cobertura completa.
 12. **Flujo `requestDelete` para workers implementado** en productos, ventas, clientes, facturas y categorias. El lado admin (aprobar/rechazar en /solicitudes) funciona.
 13. **El proyecto esta en produccion** en GCP VM `34.46.122.42`. Cambios requieren rebuild + restart en la VM.
 14. **Campo `user` en relaciones PocketBase** se guarda como ID string. Para mostrar datos: `expand: 'user'` → `record.expand?.user?.name`.
@@ -123,6 +123,5 @@ users, products, categories, invoices, vouchers, voucher_items, clients, audit_l
 ## Riesgos activos
 
 - **Auto-cancelacion SDK PocketBase:** Mitigado con `pb.autoCancellation(false)` global en hooks.server.ts de produccion. En local, solo en solicitudes y dashboard.
-- **Permisos workers:** `inventario/unmarkInventory` no verifica `user_permissions`. Gap menor (solo admin puede desmarcar).
 - **`$types` LSP:** Errores `Cannot find module './$types'` son falsos positivos. Se resuelven con `npx svelte-kit sync`.
-- **PB version mismatch:** Local usa v0.22.9, produccion usa v0.25.9. SDK es v0.26.8. Funciona pero importar schema via API requiere cuidado con IDs de colecciones.
+- **Import schema via API:** No usar. Copiar `data.db` directamente es la unica forma confiable de migrar entre instancias PB.
