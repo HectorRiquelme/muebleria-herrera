@@ -11,7 +11,7 @@ Sistema completo para la gestión de una mueblería: panel administrativo, pági
 | Framework frontend | SvelteKit | ^2.50.2 |
 | UI / reactividad | Svelte 5 (runes) | ^5.51.0 |
 | Estilos | TailwindCSS | ^4.2.1 |
-| Backend + base de datos | PocketBase | 0.22.9 |
+| Backend + base de datos | PocketBase | 0.25.9 |
 | SDK cliente PocketBase | pocketbase (JS) | ^0.26.8 |
 | Build tool | Vite | ^7.3.1 |
 | Lenguaje | TypeScript | ^5.9.3 |
@@ -69,7 +69,8 @@ muebleria-herrera/
 │   │   │   │       ├── acceso/
 │   │   │   │       ├── solicitudes/
 │   │   │   │       ├── usuarios/
-│   │   │   │       └── landing/
+│   │   │   │       ├── landing/
+│   │   │   │       └── catalogo-web/
 │   │   │   └── lib/
 │   │   │       ├── types.ts        ← Interfaces TypeScript
 │   │   │       ├── utils.ts        ← Helpers, labels, formatos
@@ -92,7 +93,7 @@ muebleria-herrera/
 │           └── slide3.jpg
 │
 ├── pb/
-│   ├── pocketbase.exe          ← Binario PocketBase v0.22.9
+│   ├── pocketbase.exe          ← Binario PocketBase v0.25.9
 │   ├── pb_schema.json          ← Schema de colecciones
 │   └── pb_data/                ← Base de datos SQLite (generada en runtime)
 │
@@ -120,6 +121,8 @@ muebleria-herrera/
 | `delete_requests` | Solicitudes de eliminación de trabajadores |
 | `user_permissions` | Permisos de acción por usuario worker |
 | `module_access` | Acceso a módulos del menú por usuario worker |
+| `landing_categories` | Categorías del catálogo público (independientes de `categories`) |
+| `landing_products` | Productos del catálogo público (independientes de `products`) |
 
 ---
 
@@ -172,6 +175,16 @@ CRUD de usuarios con rol (admin / worker) y contraseña. Solo visible para admin
 ### Landing Web
 Gestión de imágenes del carrusel de la web pública. Subida múltiple, activar/desactivar, eliminar.
 
+### Catálogo Web
+Gestión de categorías y productos que se muestran en el catálogo de la web pública. Usa colecciones independientes (`landing_categories` y `landing_products`) separadas de las tablas internas del ERP. Incluye:
+- **Pestaña Categorías:** tarjetas con imagen, nombre, descripción, orden y estado activo/inactivo.
+- **Pestaña Productos:** tabla con imagen, nombre, categoría (relación), precio, orden y estado. Filtro por categoría.
+- Cada producto se vincula a una categoría del catálogo. Al eliminar una categoría se valida que no tenga productos asociados.
+- Las categorías y productos activos se muestran automáticamente en la sección "Catálogo" de la web pública, con filtro por categoría y botón de consulta vía WhatsApp.
+
+### Respaldos
+Export/import ZIP con data JSON + archivos. Pendiente testing en runtime.
+
 ---
 
 ## Página web pública
@@ -181,12 +194,13 @@ Landing page moderna con:
 - **Hero / carrusel** automático con las imágenes cargadas desde PocketBase (fallback a imágenes estáticas)
 - **Banda de propuestas de valor** (variedad, calidad, asesoría, ubicación)
 - **Galería** con hover effect
+- **Catálogo** con filtro por categorías y grilla de productos (se muestra solo si hay datos activos en `landing_categories` y `landing_products`). Cada producto tiene imagen, categoría, precio y botón "Consultar" vía WhatsApp.
 - **Quiénes somos** con cards visuales
 - **Contacto** con card de WhatsApp destacada, datos de dirección/horario, redes sociales y mapa de Google Maps
 - **Footer** de 3 columnas con links y copyright
 
 Datos de contacto configurados:
-- WhatsApp: +56 44 367 4412
+- WhatsApp (móvil): +56 9 6875 3831
 - Dirección: Aníbal Pinto 253, Parral, Región del Maule
 - Horario: Lun–Vie 9:30–18:30 | Sáb 10:00–13:00
 
@@ -270,13 +284,15 @@ npm run build:admin
 ## Despliegue en producción
 
 Ver `DEPLOY.md` para instrucciones completas de despliegue en:
-- **Fly.io** → PocketBase (backend + base de datos)
-- **Vercel** → Panel admin + Web pública (frontends)
+- **Google Cloud VM** → PocketBase + Admin + Web (todo en una VM e2-micro)
+
+Ver `PROJECT_CONTEXT.md` para URLs y credenciales de producción.
 
 Variables de entorno necesarias:
 ```env
 # apps/admin/.env y apps/web/.env
-VITE_PB_URL=https://tu-pocketbase.fly.dev
+VITE_PB_URL=http://34.46.122.42
+PB_URL=http://127.0.0.1:8090
 ```
 
 ---
@@ -295,6 +311,7 @@ VITE_PB_URL=https://tu-pocketbase.fly.dev
 | Configurar permisos | ✅ | ❌ |
 | Ver estadísticas | ✅ | ❌ |
 | Gestionar landing | ✅ | ❌ |
+| Gestionar catálogo web | ✅ | ❌ |
 | Aprobar/rechazar solicitudes | ✅ | ❌ |
 
 ---

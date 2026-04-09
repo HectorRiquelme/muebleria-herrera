@@ -85,7 +85,7 @@ muebleria-herrera/
 | `apps/admin/src/hooks.server.ts` | Middleware: auth, locals.pb, locals.user (tipo User), cookie pb_auth. PUBLIC_ROUTES solo `/login`. |
 | `apps/admin/src/app.d.ts` | App.Locals usa `User` de `$lib/types.ts` (no AuthModel) |
 | `apps/admin/src/routes/(app)/+layout.server.ts` | Auth check, allowedModules para workers, pendingDeleteRequests para admin |
-| `apps/admin/src/routes/(app)/+layout.svelte` | Sidebar (15 items), navbar, badge solicitudes, filtrado por rol |
+| `apps/admin/src/routes/(app)/+layout.svelte` | Sidebar (16 items), navbar, badge solicitudes, filtrado por rol |
 | `apps/admin/src/lib/types.ts` | Todas las interfaces TypeScript del dominio |
 | `apps/admin/src/lib/utils.ts` | formatDate, formatCurrency (es-CL/CLP), generateSKU, labels/colors |
 | `apps/admin/src/lib/worker-modules.ts` | WORKER_MODULES: fuente de verdad de modulos accesibles por workers |
@@ -93,9 +93,9 @@ muebleria-herrera/
 | `apps/admin/src/lib/year-filter.ts` | addCreatedYearFilter, getCollectionYears |
 | `apps/admin/src/lib/backup.ts` | Constantes para respaldos: FILE_FIELDS, IMPORT_ORDER, DELETE_ORDER |
 
-## Colecciones PocketBase (12 activas)
+## Colecciones PocketBase (14 activas)
 
-users, products, categories, invoices, vouchers, voucher_items, clients, audit_logs, landing_images, delete_requests, user_permissions, module_access
+users, products, categories, invoices, vouchers, voucher_items, clients, audit_logs, landing_images, delete_requests, user_permissions, module_access, landing_categories, landing_products
 
 ## Produccion — Google Cloud VM
 

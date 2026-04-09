@@ -1,6 +1,6 @@
 # PROJECT_CONTEXT.md — Estado del Proyecto
 
-> Ultima actualizacion: 23 marzo 2026. Desplegado en produccion (GCP VM 34.46.122.42).
+> Ultima actualizacion: 9 abril 2026. Desplegado en produccion (GCP VM 34.46.122.42).
 
 ## Resumen
 
@@ -30,7 +30,7 @@ Funciona en local (Windows) y en produccion (Google Cloud VM e2-micro, Debian 12
     +-- REST ------> [PocketBase :8090] (SQLite + JWT + files)
 ```
 
-## Modulos del panel admin (15)
+## Modulos del panel admin (16)
 
 | Modulo | Ruta | Rol | Descripcion |
 |---|---|---|---|
@@ -48,11 +48,12 @@ Funciona en local (Windows) y en produccion (Google Cloud VM e2-micro, Debian 12
 | Solicitudes | /solicitudes | admin | Bandeja de solicitudes de eliminacion |
 | Usuarios | /usuarios | admin | CRUD de usuarios + rol + contrasena |
 | Landing Web | /landing | admin | Subida/gestion de imagenes del carrusel |
+| Catalogo Web | /catalogo-web | admin | CRUD categorias + productos del catalogo publico |
 | Respaldos | /respaldos | admin | Export/import ZIP con data JSON + archivos |
 
-## Colecciones PocketBase (12 activas)
+## Colecciones PocketBase (14 activas)
 
-users, products, categories, invoices, vouchers, voucher_items, clients, audit_logs, landing_images, delete_requests, user_permissions, module_access
+users, products, categories, invoices, vouchers, voucher_items, clients, audit_logs, landing_images, delete_requests, user_permissions, module_access, landing_categories, landing_products
 
 ## Campos de archivo por coleccion
 
@@ -62,10 +63,12 @@ users, products, categories, invoices, vouchers, voucher_items, clients, audit_l
 | invoices | file | file | 1 | 10MB |
 | vouchers | images | file[] | 5 | 5MB c/u |
 | landing_images | image | file | 1 | 10MB |
+| landing_categories | image | file | 1 | 5MB |
+| landing_products | image | file | 1 | 5MB |
 
 URL de archivos: `{PB_URL}/api/files/{collectionId}/{recordId}/{filename}?thumb={size}`
 
-## Estado validado (22 marzo 2026)
+## Estado validado (9 abril 2026)
 
 - Build admin: **OK**
 - Build web: **OK**
@@ -74,7 +77,7 @@ URL de archivos: `{PB_URL}/api/files/{collectionId}/{recordId}/{filename}?thumb=
 - Permisos server-side workers: implementados en create/update de productos, ventas, clientes, facturas, categorias (create+update), inventario (mark).
 - Flujo "Solicitar eliminacion": implementado en productos, ventas, clientes, facturas, categorias.
 - Moneda: `formatCurrency` usa `es-CL` y `CLP`.
-- `pb_schema.json`: sincronizado a 12 colecciones + campo `can_edit_categories`.
+- `pb_schema.json`: sincronizado a 12 colecciones base + campo `can_edit_categories`. (landing_categories y landing_products se crean via migracion o manualmente en PB admin).
 - Auth: `PUBLIC_ROUTES` solo `['/login']`. Todos los endpoints bajo `/api` requieren auth.
 - Codigo legacy: `pb.ts` y `audit.ts` eliminados (usaban svelte/store).
 - Accesibilidad: `aria-label` en 8 botones de icono (logout, sidebar, 6 modales).
@@ -85,6 +88,7 @@ URL de archivos: `{PB_URL}/api/files/{collectionId}/{recordId}/{filename}?thumb=
 
 1. **Warnings de svelte-check (54 admin + 3 web):** Mayormente `a11y_consider_explicit_label` y tipos inferidos. No bloquean build ni runtime.
 2. **Migracion `can_edit_categories`:** Archivo creado en `pb/pb_migrations/`, pendiente de ejecutar en produccion (se aplica al reiniciar PocketBase).
+3. **Colecciones `landing_categories` y `landing_products` en produccion:** Las migraciones usan sintaxis PB v0.22 (Dao/Collection) incompatible con PB v0.25. Deben crearse manualmente via PB admin UI en produccion (ver NEXT_STEPS.md D9).
 
 ## Produccion — Google Cloud VM
 

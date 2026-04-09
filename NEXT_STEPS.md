@@ -1,6 +1,6 @@
 # NEXT_STEPS.md — Pendientes Priorizados
 
-> Ultima actualizacion: 23 marzo 2026 (sesion nocturna, 2da ronda). D2, D7 sincronizados al repo. WhatsApp corregido.
+> Ultima actualizacion: 9 abril 2026. Modulo Catalogo Web implementado (landing_categories + landing_products).
 
 ---
 
@@ -44,6 +44,29 @@
   - Cards: "50+ anos en Parral", "Familia Herrera", "Despacho a domicilio", "Credito directo"
 - **Archivo:** `apps/web/src/routes/+page.svelte`
 - **Nota:** Los textos son mock razonables. El usuario puede ajustar datos exactos despues.
+
+### D9 — Crear colecciones `landing_categories` y `landing_products` en produccion
+- **Que se hizo:** Modulo Catalogo Web implementado en admin (`/catalogo-web`) + seccion catalogo en web publica. Builds OK.
+- **Que falta:** Las migraciones JS usan sintaxis PB v0.22 (Dao/Collection) que no funciona en PB v0.25.9. Las colecciones deben crearse manualmente en produccion.
+- **Siguiente paso exacto:**
+  1. Ir a `http://34.46.122.42/_/` (PB admin)
+  2. Crear coleccion `landing_categories`:
+     - name (text, required)
+     - description (text)
+     - image (file, max 1, jpg/png/webp, 5MB)
+     - order (number, default 0)
+     - active (bool, default true)
+     - List/View rules: vacías (publico). Create/Update/Delete: `@request.auth.role = "admin"`
+  3. Crear coleccion `landing_products`:
+     - name (text, required)
+     - description (text)
+     - image (file, max 1, jpg/png/webp, 5MB)
+     - price (number)
+     - category (relation → landing_categories)
+     - order (number, default 0)
+     - active (bool, default true)
+     - Mismas reglas de acceso que landing_categories
+  4. Deploy: `git pull && cd apps/admin && npm run build && cd ../web && npm run build && systemctl restart muebleria-admin muebleria-web`
 
 ---
 

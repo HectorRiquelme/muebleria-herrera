@@ -9,5 +9,16 @@ export const load: PageServerLoad = async () => {
 		sort: 'order,created'
 	}).catch(() => []);
 
-	return { images };
+	const landingCategories = await pb.collection('landing_categories').getFullList({
+		filter: 'active = true',
+		sort: 'order,name'
+	}).catch(() => []);
+
+	const landingProducts = await pb.collection('landing_products').getFullList({
+		filter: 'active = true',
+		sort: 'order,name',
+		expand: 'category'
+	}).catch(() => []);
+
+	return { images, landingCategories, landingProducts };
 };

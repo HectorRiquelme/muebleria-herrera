@@ -128,6 +128,31 @@ export interface LandingImage {
 	updated: string;
 }
 
+export interface LandingCategory {
+	id: string;
+	name: string;
+	description?: string;
+	image?: string;
+	order: number;
+	active: boolean;
+	created: string;
+	updated: string;
+}
+
+export interface LandingProduct {
+	id: string;
+	name: string;
+	description?: string;
+	image?: string;
+	price?: number;
+	category: string;
+	expand?: { category?: LandingCategory };
+	order: number;
+	active: boolean;
+	created: string;
+	updated: string;
+}
+
 export interface PaginatedResult<T> {
 	items: T[];
 	page: number;
